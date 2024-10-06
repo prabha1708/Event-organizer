@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Organizer</title>
+  <style>
+    /* Body and background settings */
+header{
+    background-color: black;
+    height:40%;
+    font-size: 3rem;
+    font-weight: bold;
+}
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+    color: #fff;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    display: block;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+nav ul li a:hover {
+    background-color: #ff6347;
+}
+
+.page {
+    display: none;
+    padding: 60px 20px;
+    height: 1100px; /* Set fixed height for pages */
+    background-size: cover;
+    background-position: center;
+}
+
+.page.active {
+    display: block;
+}
+.p{
+    font-size: 1rem;
+}
+
+/* Home Page Background */
+#home {
+    background-image: url("https://static.vecteezy.com/system/resources/previews/030/274/394/non_2x/a-wedding-stage-decorated-with-flowers-and-garlands-ai-generated-free-photo.jpg");
+}
+
+/* About Page Background */
+#about {
+    background-image: url("https://png.pngtree.com/thumb_back/fw800/background/20240704/pngtree-new-event-management-outdoor-image-image_15957682.jpg");
+    font-size: 1rem;
+}
+.about{
+ font-size: 2rem;
+}
+
+/* Headings */
+h1, .heading {
+    text-align: center;
+    color: #ffeb3b;
+    font-size: 2.5em;
+}
+
+.heading span {
+    color: #ff6347;
+}
+
+/* Gallery Section */
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid layout */
+    gap: 20px; /* Gap between gallery items */
+    padding: 20px;
+}
+
+.gallery-box {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+}
+
+.gallery-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure images are properly scaled */
+    border-radius: 15px;
+    transition: transform 0.3s; /* Image zoom effect */
+}
+
+.gallery-box:hover {
+    transform: scale(1.05); /* Zoom the gallery box */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6); /* Add a stronger shadow on hover */
+}
+
+.gallery-box:hover img {
+    transform: scale(1.1); /* Slight zoom on image hover */
+}
+
+.gallery-box .title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7); /* Dark overlay for title background */
+    color: #ffeb3b;
+    font-weight: bold;
+    font-size: 1.2em;
+    border-radius: 0 0 15px 15px; /* Match the border radius of the box */
+    transition: background 0.3s; /* Smooth transition for title background */
+}
+
+.gallery-box:hover .title {
+    background: rgba(255, 99, 71, 0.8); /* Change background color on hover */
+}
+
+/* Lightbox */
+#lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#lightbox img {
+    max-width: 80%;
+    max-height: 80%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+#lightbox.active {
+    display: flex;
+}
+
+
+/* Pricing Section */
+.box-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.box {
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 250px;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: #ffeb3b;
+}
+
+.box h3 {
+    margin-bottom: 10px;
+}
+
+.box .amount {
+    font-size: 2em;
+    color: #ff6347;
+    margin-bottom: 20px;
+}
+
+.box ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.box ul li {
+    margin-bottom: 10px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff6347;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #ffeb3b;
+    color: black;
+}
+
+/* Registration Section */
+
+
+/* Home Page Text Box */
+.text-box {
+    background-color: rgba(255, 255, 255, 0.3); /* Transparent white */
+    padding: 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease; /* Transition effect */
+    max-width: 600px; /* Set a maximum width for the text box */
+    margin: auto; /* Center the text box */
+    text-align: center; /* Center the text */
+}
+
+.text-box:hover {
+    background-color: rgba(255, 255, 255, 0.5); /* Change background color on hover */
+}
+
+/* Body and background settings */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+    color: #fff;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    display: block;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    background-color: #ff6347;
+}
+
+.page {
+    display: none;
+    padding: 60px 20px;
+    height: 1100px; /* Set fixed height for pages */
+    background-size: cover;
+    background-position: center;
+}
+
+.page.active {
+    display: block;
+}
+
+/* Home Page Background */
+#home {
+    background-image: url("https://theeventcompanydubai.com/wp-content/uploads/2022/05/Theme-Event-Decor.jpg");
+}
+
+/* About Page Background */
+#about {
+    background-image: url("https://png.pngtree.com/thumb_back/fw800/background/20240704/pngtree-new-event-management-outdoor-image-image_15957682.jpg");
+}
+
+/* Headings */
+h1, .heading {
+    text-align: center;
+    color: #ffeb3b;
+}
+
+/* Gallery Styles */
+.gallery-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.gallery-box {
+    margin: 10px;
+    position: relative;
+}
+
+.gallery-box img {
+    width: 300px;
+    height: 200px;
+    border-radius: 10px;
+}
+
+.gallery-box .title {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: white;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* Prices Section */
+.box-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.box {
+    background-color: #444;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 15px;
+    text-align: center;
+    width: 300px;
+    transition: transform 0.3s;
+    color: aliceblue;
+}
+
+.box:hover {
+    transform: scale(1.05);
+}
+
+.title {
+    color: #ffeb3b;
+}
+
+.amount {
+    color: #ff6347;
+    font-size: 1.5em;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align form contents */
+    max-width: 450px; /* Set a consistent width for the form */
+    margin: 40px auto; /* Center form horizontally on the page */
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    color: #ffeb3b;
+}
+
+form label {
+    margin-top: 15px;
+    font-size: 1.1em;
+    color: #ffeb3b;
+    width: 100%; /* Make label take full width */
+    text-align: left; /* Align label text to the left */
+}
+
+form input, form select {
+    width: 100%; /* Ensure input fields fill the form width */
+    padding: 12px;
+    margin-top: 8px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1em;
+    background-color: #f1f1f1;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+form input:focus, form select:focus {
+    background-color: #e0e0e0;
+    outline: none;
+}
+
+form input[type="submit"] {
+    margin-top: 20px;
+    background-color: #ff6347;
+    color: white;
+    font-size: 1.2em;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%; /* Ensure submit button fills the width */
+}
+
+form input[type="submit"]:hover {
+    background-color: #ffeb3b;
+    color: black;
+    transform: scale(1.05);
+}
+
+form input[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+/* Adjust spacing between inputs and labels */
+form label, form input, form select {
+    width: 100%; /* Ensure labels and inputs have the same width */
+    text-align: left; /* Align text inside the inputs to the left */
+}
+
+form input::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+
+/*  Page Text Box */
+.text-box {
+    background-color: rgba(255, 255, 255, 0.3); /* Transparent white */
+    padding: 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease; /* Transition effect */
+    max-width: 600px; /* Set a maximum width for the text box */
+    margin: auto; /* Center the text box */
+    text-align: center; /* Center the text */
+    color: black;
+}
+
+.text-box:hover {
+    background-color: rgba(255, 255, 255, 0.5); /* Change background color on hover */
+}
+
+  </style>
+</head>
+<body>
+    <header><center>
+        Evento
+    </center>
+    </header>
+  <nav>
+    <ul>
+      <li><a href="#" onclick="showPage('home')">Home</a></li>
+      <li><a href="#" onclick="showPage('about')">About</a></li>
+      <li><a href="#" onclick="showPage('gallery')">Gallery</a></li>
+      <li><a href="#" onclick="showPage('price')">Prices</a></li>
+      <li><a href="register.html" target="_blank">Registration</a></li>
+    </ul>
+  </nav>
+
+  <div id="content">
+    <!-- Home Section -->
+    <section id="home" class="page active">
+      <h1 style="font-size: 36px;">Welcome to Our Event Organizer</h1>
+      <div class="text-box">
+        <p style="font-size: 22px;">We plan and organize the best events to make your special moments unforgettable!</p>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="page active">
+      <h1 style="font-size: 36px;"><center>About Us</center></h1>
+      <div class="text-box">
+      <p style="font-size: 22px;">We are a professional team with years of experience in organizing weddings, birthdays, and corporate events, ensuring every detail is perfect.</p>
+    </div>
+    </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="page">
+    <h1 class="heading">Our <span>Gallery</span></h1>
+    <div class="gallery-container">
+      <div class="gallery-box">
+        <img src="https://image.wedmegood.com/resized/800X/uploads/member/173027/1638121642_05.jpg" alt="">
+        <h3 class="title">Elegant Decorations</h3>
+      </div>
+      <div class="gallery-box">
+        <img src="https://i.pinimg.com/originals/92/b9/51/92b951f09fbea9243bc38412c1bb2482.jpg" alt="">
+        <h3 class="title">Special Moments</h3>
+      </div>
+      <div class="gallery-box">
+          <img src="https://thecamellia.events/wp-content/uploads/2024/05/indian-wedding-mandap-decor-yellow-white-flowers-scaled.jpg" alt="">
+          <h3 class="title">pre-wedding vibes</h3>
+        </div>
+        <div class="gallery-box">
+          <img src="https://media-api.xogrp.com/images/9665700c-c69f-4fb7-bfef-4397c3dc99e6~rs_768.h" alt="">
+          <h3 class="title">capturing relations</h3>
+        </div>
+        <div class="gallery-box">
+          <img src="https://i.pinimg.com/564x/42/9b/af/429baf18cbb66c62afa1fcb44918dd6e.jpg" alt="">
+          <h3 class="title">wedding setup</h3>
+        </div>
+        <div class="gallery-box">
+          <img src="https://cdn.shopify.com/s/files/1/2690/0106/files/Lofaris_Shimmer_Sequin_Wall_Panels_Easy_Set_Party_Favor_For_Events_480x480.jpg?v=1704192187" alt="">
+          <h3 class="title">Birthday bash</h3>
+        </div>
+        <div class="gallery-box">
+          <img src="https://www.ptaufiqphotography.com/wp-content/uploads/2021/03/Indian-Wedding-Mehndi-Mountain-Top-Inn-and-Resort-1536x1024.jpg" alt="">
+          <h3 class="title">Mehandi Event</h3>
+        </div>
+        <div class="gallery-box">
+          <img src="https://cdn0.weddingwire.in/article/9704/original/1920/jpg/104079-altair.jpeg" alt="">
+          <h3 class="title">Vibrant parties</h3>
+        </div>
+    </div>
+  </section>
+
+  <!-- Prices Section -->
+  <section id="price" class="page">
+    <h1 class="heading">Our <span>Prices</span></h1>
+    <div class="box-container">
+      <div class="box">
+        <h3 class="title">Birthday Package</h3>
+        <h3 class="amount">10k</h3>
+        <ul>
+          <li>Decorations</li>
+          <li>Music & Photos</li>
+          <li>Food & Drinks</li>
+          <li>Invitation Card</li>
+        </ul>
+        <a href="#" class="btn">Book Now</a>
+      </div>
+      <div class="box">
+        <h3 class="title">Wedding Package</h3>
+        <h3 class="amount">2L</h3>
+        <ul>
+          <li>Decorations</li>
+          <li>Music & Photos</li>
+          <li>Food & Drinks</li>
+          <li>Invitation Card</li>
+        </ul>
+        <a href="#" class="btn">Book Now</a>
+      </div>
+      <div class="box">
+          <h3 class="title">Professional event Package</h3>
+          <h3 class="amount">15K</h3>
+          <ul>
+            <li>Decorations</li>
+            <li>Music & Photos</li>
+            <li>Food & Drinks</li>
+            <li>Invitation Card</li>
+          </ul>
+          <a href="#" class="btn">Book Now</a>
+        </div>
+        <div class="box">
+          <h3 class="title">Anniversary Package</h3>
+          <h3 class="amount">50K</h3>
+          <ul>
+            <li>Decorations</li>
+            <li>Music & Photos</li>
+            <li>Food & Drinks</li>
+            <li>Invitation Card</li>
+          </ul>
+          <a href="#" class="btn">Book Now</a>
+        </div>
+    </div>
+  </section>
+
+  <!-- Registration Section -->
+  
+<script src="script.js"></script>
+</body>
+</html>
